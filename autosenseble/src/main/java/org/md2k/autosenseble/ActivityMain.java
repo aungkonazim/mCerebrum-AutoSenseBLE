@@ -311,7 +311,7 @@ public class ActivityMain extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(INTENT_NAME));
         mHandler.post(runnable);
-        prepareTable();
+        initializeUI();
         super.onResume();
     }
 

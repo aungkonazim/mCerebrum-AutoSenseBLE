@@ -38,12 +38,12 @@ public class ECGQualityCalculation {
     private static final int BUFF_LENGTH = 3;
     // ========
     private static final int ACCEPTABLE_OUTLIER_PERCENT = 34;
-    private static final int OUTLIER_THRESHOLD_HIGH = 60000;
-    private static final int OUTLIER_THRESHOLD_LOW = 20;
+    private static final int OUTLIER_THRESHOLD_HIGH = 55000;
+    private static final int OUTLIER_THRESHOLD_LOW = 5000;
     private static final int BAD_SEGMENTS_THRESHOLD = 2;
-    private static final int SLOPE_THRESHOLD = 1000;
-    private static final int RANGE_THRESHOLD = 200;
-    private final static int ECK_THRESHOLD_BAND_LOOSE = 100;
+    private static final int SLOPE_THRESHOLD = 1100;
+    private static final int RANGE_THRESHOLD = 500;
+    private final static int ECK_THRESHOLD_BAND_LOOSE = 5000;
     public final static double MINIMUM_EXPECTED_SAMPLES = 3 * (0.33) * 64;  //33% of a 3 second window with 10.33 sampling frequency
 
     private static final String TAG = "ECKQualityCalculation";
@@ -187,14 +187,16 @@ public class ECGQualityCalculation {
         classifyBuffer();
 
         if (segment_class == SEGMENT_BAD) {
-            Log.d("abc","111111");
+            Log.d("ecg_data_quality","Not worn");
             return DATA_QUALITY.NOT_WORN;
+
             //}else if(2*amplitude_very_small>envelBuff.length){
             //return DATA_QUALITY_BAND_OFF;
         } else if (2 * amplitude_small > envelBuff.length) {
-            Log.d("abc","111111");
+            Log.d("ecg_data_quality","BandLoose");
             return DATA_QUALITY.BAND_LOOSE;
         } else if((outlierCounts[1]-outlierCounts[2]) <= (int)(ECK_THRESHOLD_BAND_LOOSE)) {
+            Log.d("ecg_data_quality","BandLoose");
             return DATA_QUALITY.BAND_LOOSE;
         }
         //return DATA_QUALITY_GOOD;
@@ -203,7 +205,7 @@ public class ECGQualityCalculation {
         //if this function returns good quality, then it is further checked by the second function developed by Rummana
         //fitler_bad_ecg_v2(int[] data);
         //assume that 3 seconds data is received by this function. now segment them into one second window and returns the status as good if just one window give good quality result
-
+        Log.d("ecg_data_quality","Good");
         return DATA_QUALITY.GOOD;
     }
 
