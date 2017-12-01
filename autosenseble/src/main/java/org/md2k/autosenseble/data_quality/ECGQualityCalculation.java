@@ -187,16 +187,13 @@ public class ECGQualityCalculation {
         classifyBuffer();
 
         if (segment_class == SEGMENT_BAD) {
-            Log.d("ecg_data_quality","Not worn");
             return DATA_QUALITY.NOT_WORN;
 
             //}else if(2*amplitude_very_small>envelBuff.length){
             //return DATA_QUALITY_BAND_OFF;
         } else if (2 * amplitude_small > envelBuff.length) {
-            Log.d("ecg_data_quality","BandLoose");
             return DATA_QUALITY.BAND_LOOSE;
         } else if((outlierCounts[1]-outlierCounts[2]) <= (int)(ECK_THRESHOLD_BAND_LOOSE)) {
-            Log.d("ecg_data_quality","BandLoose");
             return DATA_QUALITY.BAND_LOOSE;
         }
         //return DATA_QUALITY_GOOD;
